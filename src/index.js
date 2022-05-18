@@ -12,11 +12,12 @@ app.use(json());
 
 app.post('/poll', async (req,res) => {
     const { title, expireAt } = req.body;
-    let today = new Date()
+    let now = dayjs();
+    console.log(now.format("YYYY-MM-DD HH:mm:ss"));
 
     const poolSchema = joi.object({
         title: joi.string().required(),
-        expireAt: joi.string().allow('').default(today.getDate)
+        expireAt: joi.string().allow('').default(now.format("YYYY-MM-DD HH:mm:ss"))
     })
 
     const {error} = poolSchema.validate(req.body, {abortEarly: false})
@@ -28,7 +29,7 @@ app.post('/poll', async (req,res) => {
     try {
         await db.collection("polls").insertOne({
             title,
-            expireAt: dayjs().format('HH:mm:ss')
+            expireAt
         })
         console.log(expireAt)
         res.sendStatus(201)
