@@ -1,7 +1,7 @@
 import joi from "joi";
 import dayjs from "dayjs";
 
-import db from "./../src/db.js";
+import db from "../src/db.js";
 
 export async function postPoll(req, res) {
   const { title, expireAt } = req.body;
