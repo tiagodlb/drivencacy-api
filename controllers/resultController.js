@@ -10,13 +10,14 @@ export async function getResult(req, res) {
       .findOne({ _id: new ObjectId(id) });
     const choices = await db.collection("choices").findOne({ pollId: id });
     console.log(choices);
+    const votes = await db.collection("votes").find().toArray()
     const results = await db.collection("results").insertOne({
       _id: polls._id,
       title: polls.title,
       expireAt: polls.expireAt,
       result: {
         title: choices.title,
-        votes: choices.votes,
+        votes: votes.length,
       },
     });
 
