@@ -20,9 +20,10 @@ export async function getResult(req, res) {
         votes: votes.length
       },
     });
-    const result = await db.collection("results").findOne({title: polls.title})
+    const result = await db.collection("results").find({title: polls.title}).toArray()
+    result.reverse()
     console.log(result)
-    res.send(result);
+    res.send(result[0]);
   } catch (error) {
     console.log(error);
     return res.status(500).send("Erro ao pegar o resultado");
