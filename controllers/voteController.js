@@ -40,7 +40,7 @@ export async function postChoiceIdVote(req, res) {
       let vote = 1;
       let voteData = await db.collection("votes").insertOne({
         title: vote,
-        pollId: id,
+        pollId: ObjectId(id),
         choiceId: voteExists._id,
         createdAt: now.format("YYYY-MM-DD HH:mm:ss")
       });
