@@ -44,9 +44,14 @@ export async function postChoiceIdVote(req, res) {
         choiceId: voteExists._id,
         createdAt: now.format("YYYY-MM-DD HH:mm:ss")
       });
-      console.log(voteData + "votos = 1?" + " " + voteData.value);
       return res.sendStatus(201);
     }
+    let voteData = await db.collection("votes").insertOne({
+      title: parseInt(voteData.title)+1,
+      pollId: ObjectId(id),
+      choiceId: voteExists._id,
+      createdAt: now.format("YYYY-MM-DD HH:mm:ss")
+    });
     res.sendStatus(201);
   } catch (error) {
     console.log(error);
