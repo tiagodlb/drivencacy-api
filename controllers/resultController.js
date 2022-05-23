@@ -8,9 +8,9 @@ export async function getResult(req, res) {
     const polls = await db
       .collection("polls")
       .findOne({ _id: new ObjectId(id) });
-    const choices = await db.collection("choices").findOne({ pollId: id });
-    console.log(choices);
-    const votes = await db.collection("votes").find().toArray();
+      const votes = await db.collection("votes").find({choiceId: id}).toArray();
+      const choices = await db.collection("choices").findOne({ pollId: votes.pollId });
+      console.log(choices);
     console.log(votes)
     const results = await db.collection("results").insertOne({
       title: polls.title,
