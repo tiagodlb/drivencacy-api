@@ -17,7 +17,7 @@ export async function getResult(req, res) {
       expireAt: polls.expireAt,
       result: {
         title: choices.title,
-        votes: votes.length,
+        votes: votes
       },
     });
 
