@@ -13,7 +13,6 @@ export async function getResult(req, res) {
     const votes = await db.collection("votes").find().toArray();
     console.log(votes)
     const results = await db.collection("results").insertOne({
-      _id: polls._id,
       title: polls.title,
       expireAt: polls.expireAt,
       result: {
