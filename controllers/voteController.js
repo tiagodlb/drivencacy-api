@@ -38,14 +38,10 @@ export async function postChoiceIdVote(req, res) {
     console.log(voteExists);
     if (!voteExists) {
       let vote = 1;
-      let voteArray = await db
-        .collection("choices")
-        .find({ pollId: id })
-        .toArray();
       let voteData = await db.collection("votes").insertOne({
         title: vote,
         pollId: id,
-        choiceId: voteArray._id,
+        choiceId: voteExists._id,
         createdAt: now.format("YYYY-MM-DD HH:mm:ss")
       });
       console.log(voteData + "votos = 1?" + " " + voteData.value);
