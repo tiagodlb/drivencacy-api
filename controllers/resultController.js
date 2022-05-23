@@ -11,8 +11,6 @@ export async function getResult(req, res) {
         .collection("polls")
         .findOne({ _id: new ObjectId(choices.pollId) });
         console.log(votes)
-        console.log(choices);
-        console.log(polls)
     const results = await db.collection("results").insertOne({
       title: polls.title,
       expireAt: polls.expireAt,
