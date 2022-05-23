@@ -20,8 +20,9 @@ export async function getResult(req, res) {
         votes: votes.length
       },
     });
-    console.log(results)
-    res.send(results);
+    const result = await db.collection("results").findOne({title: polls.title})
+    console.log(result)
+    res.send(result);
   } catch (error) {
     console.log(error);
     return res.status(500).send("Erro ao pegar o resultado");
