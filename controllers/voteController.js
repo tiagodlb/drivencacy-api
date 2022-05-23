@@ -42,6 +42,7 @@ export async function postChoiceIdVote(req, res) {
         .collection("choices")
         .find({ pollId: id })
         .toArray();
+        console.log(voteArray)
       let voteData = await db.collection("votes").insertOne({
         title: vote,
         pollId: id,
