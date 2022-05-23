@@ -48,7 +48,7 @@ export async function postChoiceIdVote(req, res) {
     }
     let voteData = await db.collection("votes").findOne({choiceId: voteExists._id})
     await db.collection("votes").insertOne({
-      title: parseInt(voteData.title)+1,
+      title: 1,
       pollId: ObjectId(id),
       choiceId: voteExists._id,
       createdAt: now.format("YYYY-MM-DD HH:mm:ss")
