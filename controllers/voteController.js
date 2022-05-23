@@ -35,14 +35,13 @@ export async function postChoiceIdVote(req, res) {
     console.log(choice);
 
     let voteExists = await db.collection("choices").findOne({ pollId: id });
-    console.log(parseInt(voteExists) + 1);
+    console.log(voteExists);
     if (!voteExists) {
       let vote = 1;
       let voteArray = await db
         .collection("choices")
         .find({ pollId: id })
         .toArray();
-        console.log(voteArray)
       let voteData = await db.collection("votes").insertOne({
         title: vote,
         pollId: id,
