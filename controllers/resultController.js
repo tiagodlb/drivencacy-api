@@ -20,7 +20,7 @@ export async function getResult(req, res) {
         votes: votes.length
       },
     });
-
+    console.log(results)
     res.send(results);
   } catch (error) {
     console.log(error);
