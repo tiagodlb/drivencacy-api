@@ -28,13 +28,10 @@ export async function postChoiceIdVote(req, res) {
   const id = req.params.id;
   let now = dayjs();
   try {
-    const choice = await db.collection("polls").findOne({ _id: ObjectId(id) });
-    if (!choice) {
+    let voteExists = await db.collection("choices").findOne({ _id: id });
+    if (!voteExists) {
       return res.sendStatus(404);
     }
-    console.log(choice);
-
-    let voteExists = await db.collection("choices").findOne({ pollId: id });
     console.log(voteExists);
     if (!voteExists) {
       let vote = 1;
