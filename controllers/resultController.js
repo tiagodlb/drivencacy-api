@@ -10,7 +10,7 @@ export async function getResult(req, res) {
       const polls = await db
         .collection("polls")
         .findOne({ _id: new ObjectId(choices.pollId) });
-        console.log(choices)
+        console.log(votes[0])
     const results = await db.collection("results").insertOne({
       title: polls.title,
       expireAt: polls.expireAt,
