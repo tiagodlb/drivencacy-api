@@ -6,7 +6,8 @@ export async function getResult(req, res) {
 
   try {
       const votes = await db.collection("votes").find({choiceId: ObjectId(id)}).toArray();
-      const choices = await db.collection("choices").findOne({ pollId: votes[0].pollId });
+      const specificVote = votes[0]
+      const choices = await db.collection("choices").findOne({ pollId: String(specificVote.pollId) });
       const polls = await db
         .collection("polls")
         .findOne({ _id: new ObjectId(choices.pollId) });
