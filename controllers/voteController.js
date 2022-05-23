@@ -32,17 +32,20 @@ export async function postChoiceIdVote(req, res) {
     if (!voteExists) {
       return res.sendStatus(404);
     }
-    console.log(voteExists);
-    if (!voteExists) {
-      let vote = 1;
-      let voteData = await db.collection("votes").insertOne({
-        title: vote,
-        pollId: ObjectId(id),
-        choiceId: voteExists._id,
-        createdAt: now.format("YYYY-MM-DD HH:mm:ss")
-      });
-      return res.sendStatus(201);
+
+    const pollExists = await db
+      .collection("polls")
+      .findOne({ _id: new ObjectId(voteExists.pollId) });
+    console.log(pollExists.expireAt);
+
+    const data = pollExists.expireAt;
+
+    const pollExpires = now.add();
+
+    if (pollExpires.diff(data, "day") >= 30) {
+      return res.sendStatus(403);
     }
+    
     let voteData = await db.collection("votes").findOne({choiceId: voteExists._id})
     await db.collection("votes").insertOne({
       title: 1,
