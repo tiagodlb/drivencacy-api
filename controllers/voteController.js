@@ -37,7 +37,7 @@ export async function postChoiceIdVote(req, res) {
     //checar aqui se já expirou
     const pollExists = await db
       .collection("polls")
-      .findOne({ _id: new ObjectId(poolId) });
+      .findOne({ _id: new ObjectId(pollId) });
     console.log(pollExists.expireAt);
     
     const data = pollExists.expireAt;
