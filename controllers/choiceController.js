@@ -12,27 +12,35 @@ export async function postChoice(req, res) {
     title: joi.string().required(),
     poolId: joi.string().required(),
   });
-  const { error } = choiceSchema.validate(req.body, {abortEarly: false});
+  const { error } = choiceSchema.validate(req.body, { abortEarly: false });
   if (error) {
     console.log(error);
     return res.sendStatus(422);
   }
   try {
-    const pollExists = await db.collection("polls").findOne({ _id: ObjectId(poolId) });
-    console.log(pollExists)
+    const pollExists = await db
+      .collection("polls")
+      .findOne({ _id: new ObjectId(poolId) });
+    console.log(pollExists.expireAt);
     if (!pollExists) {
       return res.sendStatus(404);
     }
 
-    const expireExists = await db.collection("polls").findOne({ expireAt: ObjectId(poolId) });
-    console.log(expireExists)
-    const pollExpires = now.add("30", "day");
+    const data = pollExists.expireAt;
+
+    const pollExpires = now.add();
+
+    if (pollExpires.diff(data, "day") >= 30) {
+      return res.sendStatus(403);
+    }
 
     console.log(pollExpires);
 
-    const titleExists = await db.collection("choices").findOne({ title: title });
-    console.log(title, poolId)
-    console.log(titleExists)
+    const titleExists = await db
+      .collection("choices")
+      .findOne({ title: title });
+    console.log(title, poolId);
+    console.log(titleExists);
     if (titleExists) {
       return res.sendStatus(409);
     }
