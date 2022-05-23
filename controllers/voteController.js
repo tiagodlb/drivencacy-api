@@ -46,7 +46,8 @@ export async function postChoiceIdVote(req, res) {
       });
       return res.sendStatus(201);
     }
-    let voteData = await db.collection("votes").insertOne({
+    let voteData = await db.collection("votes").findOne({choiceId: voteExists._id})
+    await db.collection("votes").insertOne({
       title: parseInt(voteData.title)+1,
       pollId: ObjectId(id),
       choiceId: voteExists._id,
