@@ -50,7 +50,7 @@ export async function postChoiceIdVote(req, res) {
 
     let voteExists = await db.collection("choices").findOne({ pollId: id });
     console.log(parseInt(voteExists) + 1);
-    if (!voteExists.votes) {
+    if (!voteExists) {
       let vote = 1;
       let voteArray = await db
         .collection("choices")
