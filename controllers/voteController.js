@@ -45,6 +45,8 @@ export async function postChoiceIdVote(req, res) {
         .toArray();
       let voteData = await db.collection("votes").insertOne({
         title: vote,
+        pollId: id,
+        createdAt: now.format("YYYY-MM-DD HH:mm:ss")
       });
       console.log(voteData + "votos = 1?" + " " + voteData.value);
       return res.sendStatus(201);
